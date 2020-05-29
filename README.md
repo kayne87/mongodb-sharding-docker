@@ -89,7 +89,7 @@ If you see something like that, we are at a good point.
 { "_id" : "shardedDB", "primary" : "mongors2", "partitioned" : true, "version" : { "uuid" : UUID("14477fea-536a-47a7-9e9d-0201ea2b85f1"), "lastMod" : 1 } }
 ```
 
-Now we can proceed to create the **sharded collection**. If your application will mostly perform write operations and it needs to execute simple read procedures, the Hashing Strategy is a good option, in this case you can adopt this by using the unique identifier in order to equal distribute the amount of data. In Ranged Strategy you can encounter unbalanced distributions given the optimization for read procedures ("similar data" are grouped). Refer to [Sharding Shard Key](https://docs.mongodb.com/manual/core/sharding-shard-key/) for more informations.
+Now we can proceed to create the **sharded collection**. If your application will mostly perform write operations and it needs to execute simple read procedures, the Hashing Strategy is a good option, in this case you can adopt this by using the unique identifier in order to equal distribute the amount of data. In Ranged Strategy you can encounter unbalanced distributions given the optimization for read procedures ("similar data" are grouped). Refer to [Shard Keys](https://docs.mongodb.com/manual/core/sharding-shard-key/) guide for more informations.
 
 ```js
 use shardedDB
