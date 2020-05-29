@@ -31,13 +31,13 @@ rs.status()
 
 # Shard 1
 
-From **mongoshard11** mongo shell.
+From **mongoshard11** mongo shell we need now to initialize the replica set cluster for the first Shard.
 
 ```js
 rs.initiate({_id : "mongors1", members: [{ _id : 0, host : "mongoshard11" },{ _id : 1, host : "mongoshard12" },{ _id : 2, host : "mongoshard13" }]})
 ```
 
-Still from the mongoshard11 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node.
+Still from the mongoshard11 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node configured.
 
 ```js
 rs.status()
@@ -45,13 +45,13 @@ rs.status()
 
 # Shard 2
 
-From **mongoshard21** mongo shell
+From **mongoshard21** mongo shell we need now to initialize the replica set cluster for the second Shard.
 
 ```js
 rs.initiate({_id : "mongors2", members: [{ _id : 0, host : "mongoshard21" },{ _id : 1, host : "mongoshard22" },{ _id : 2, host : "mongoshard23" }]})
 ```
 
-Still from the mongoshard21 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node.
+Still from the mongoshard21 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node configured.
 
 ```js
 rs.status()
@@ -131,7 +131,7 @@ Totals
 
 #### Cleaning tip
 
-With the following command, from the docker-compose file folder, you can stop all running containers and remove all of them.
+With the following command, from the docker-compose file folder, you can stop all the running containers and remove all of them.
 
 ```console
 docker-compose rm -sv
