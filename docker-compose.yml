@@ -103,6 +103,12 @@ services:
       - mongocfg1
       - mongocfg2
       - mongocfg3
+      - mongoshard11
+      - mongoshard12
+      - mongoshard13
+      - mongoshard21
+      - mongoshard22
+      - mongoshard23
     command: mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017
     ports:
       - 27019:27017
