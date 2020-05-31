@@ -24,7 +24,7 @@ docker-compose up -d
 
 After the execution of this command, all the nodes will be runned and built with configuration scripts that will be executed automatically. The entire process will take some seconds in order to initialize 3 Replica set, elect primary nodes and add the Shards to the router.
 
-From **mongos** (or from every node mongocfgx) mongo shell
+From **mongos** mongo shell
 
 ```console
 mongo --port 27027 # or "docker exec -it mongos1 /bin/bash" 
