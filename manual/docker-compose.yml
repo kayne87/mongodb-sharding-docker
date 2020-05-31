@@ -1,111 +1,108 @@
+#
+#Deploy these nodes and follow the step-by-step guide
+#
+
 version: '3'
 services:
-
-# First Shard Cluster
-
   mongoshard11:
-    build:
-      context: build/replicaset
     container_name: mongoshard11
+    image: mongo
     depends_on:
       - mongoshard12
       - mongoshard13
-    command: mongod --shardsvr --replSet shard1 --dbpath /data/db --port 27017
-    environment:
-      - REPLICA_SET=shard1
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    ports:
+      - 27027:27017
     expose:
       - "27017"
     volumes:
       - shard_d11:/data/db
   mongoshard12:
-    image: mongo
     container_name: mongoshard12
-    command: mongod --shardsvr --replSet shard1 --dbpath /data/db --port 27017
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    ports:
+      - 27037:27017
     expose:
       - "27017"
     volumes:
       - shard_d12:/data/db
   mongoshard13:
-    image: mongo
     container_name: mongoshard13
-    command: mongod --shardsvr --replSet shard1 --dbpath /data/db --port 27017
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    ports:
+      - 27047:27017
     expose:
       - "27017"
     volumes:
       - shard_d13:/data/db
 
-# Second Shard Cluster
-
   mongoshard21:
-    build:
-      context: build/replicaset
     container_name: mongoshard21
+    image: mongo
     depends_on:
       - mongoshard22
       - mongoshard23
-    command: mongod --shardsvr --replSet shard2 --dbpath /data/db --port 27017
-    environment:
-      - REPLICA_SET=shard2
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    ports:
+      - 27057:27017
     expose:
       - "27017"
     volumes:
       - shard_d21:/data/db
   mongoshard22:
-    image: mongo
     container_name: mongoshard22
-    command: mongod --shardsvr --replSet shard2 --dbpath /data/db --port 27017
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    ports:
+      - 27067:27017
     expose:
       - "27017"
     volumes:
       - shard_d22:/data/db
   mongoshard23:
-    image: mongo
     container_name: mongoshard23
-    command: mongod --shardsvr --replSet shard2 --dbpath /data/db --port 27017
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    ports:
+      - 27077:27017
     expose:
       - "27017"
     volumes:
       - shard_d23:/data/db      
-    
-# Config Cluster
-    
+      
   mongocfg1:
-    build:
-      context: build/replicaset
     container_name: mongocfg1
+    image: mongo
     depends_on:
       - mongocfg2
       - mongocfg3
-    command: mongod --configsvr --replSet cfg --dbpath /data/db --port 27017
-    environment:
-      - REPLICA_SET=cfg
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
     expose:
       - "27017"
     volumes:
       - shard_c1:/data/db
   mongocfg2:
-    image: mongo
     container_name: mongocfg2
-    command: mongod --configsvr --replSet cfg --dbpath /data/db --port 27017
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
     expose:
       - "27017"
     volumes:
       - shard_c2:/data/db
   mongocfg3:
-    image: mongo
     container_name: mongocfg3
-    command: mongod --configsvr --replSet cfg --dbpath /data/db --port 27017
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
     expose:
       - "27017"
     volumes:
       - shard_c3:/data/db      
 
-# Build mongos Router
-
   mongos1:
-    build:
-      context: build/router
     container_name: mongos1
+    image: mongo
     depends_on:
       - mongocfg1
       - mongocfg2
@@ -116,13 +113,12 @@ services:
       - mongoshard21
       - mongoshard22
       - mongoshard23
-    command: mongos --configdb cfg/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017 --bind_ip_all
-    environment: #we can specify only the primary node for each cluster shard, other nodes will appear automatically
-      - SHARDS=shard1/mongoshard11;shard2/mongoshard21
+    command: mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017
     ports:
-      - 27027:27017
+      - 27019:27017
     expose:
       - "27017"
+
       
 volumes:
   shard_d11:
