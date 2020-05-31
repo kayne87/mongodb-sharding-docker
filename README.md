@@ -77,20 +77,20 @@ db.shardedCollection.getShardDistribution()
 Enjoy your **sharded cluster** :)
 
 ```console
-Shard mongors1 at mongors1/mongoshard11:27017,mongoshard12:27017,mongoshard13:27017
+Shard shard1 at shard1/mongoshard11:27017,mongoshard12:27017,mongoshard13:27017
  data : 23KiB docs : 730 chunks : 2
  estimated data per chunk : 11KiB
  estimated docs per chunk : 365
 
-Shard mongors2 at mongors2/mongoshard21:27017,mongoshard22:27017,mongoshard23:27017
+Shard shard2 at shard2/mongoshard21:27017,mongoshard22:27017,mongoshard23:27017
  data : 24KiB docs : 770 chunks : 2
  estimated data per chunk : 12KiB
  estimated docs per chunk : 385
 
 Totals
  data : 48KiB docs : 1500 chunks : 4
- Shard mongors1 contains 48.66% data, 48.66% docs in cluster, avg obj size on shard : 33B
- Shard mongors2 contains 51.33% data, 51.33% docs in cluster, avg obj size on shard : 33B
+ Shard shard1 contains 48.66% data, 48.66% docs in cluster, avg obj size on shard : 33B
+ Shard shard2 contains 51.33% data, 51.33% docs in cluster, avg obj size on shard : 33B
 ```
 
 
