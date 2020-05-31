@@ -16,7 +16,7 @@ After starting docker-compose, access to the containers as I wrote in this guide
 
 # Fastest configuration
 
-Using the fastest configuration of this repository you can deploy your Sharded Cluster with only one command.
+Using the fastest configuration of this repository you can deploy your Sharded Cluster with only one command from the route directory.
 
 ```console
 docker-compose up -d
