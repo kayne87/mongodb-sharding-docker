@@ -14,63 +14,28 @@ For more advanced topics: **[Membership Authentication](https://docs.mongodb.com
 
 After starting docker-compose, access to the containers as I wrote in this guide.
 
-# Config Servers in replica set
+# Fastest configuration
 
+Using the fastest configuration of this repository you can deploy your Sharded Cluster with only one command.
 
-From **mongocfg1** (or from every node mongocfgx) mongo shell
-
-```js
-rs.initiate({_id: "mongors1conf", configsvr: true, members: [{_id: 0, host: "mongocfg1"},{_id: 1, host: "mongocfg2"}, {_id: 2, host : "mongocfg3"}]})
+```console
+docker-compose up -d
 ```
 
-Still from the mongocfg1 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node.
+After the execution of this command, all the nodes will be runned and built with configuration scripts that will be executed automatically. The entire process will take some seconds in order to initialize 3 Replica set, elect primary nodes and add the Shards to the router.
 
-```js
-rs.status()
+From **mongos** (or from every node mongocfgx) mongo shell
+
+```console
+mongo --port 27027 # or "docker exec -it mongos1 /bin/bash" 
+> sh.status()
 ```
 
-# Shard 1
+If you see shards attached the output report, then the process of deploy and configuration is terminated and you can continue with the **Test the architecture** paragraph.
 
-From **mongoshard11** mongo shell we need now to initialize the replica set cluster for the first Shard.
+# Step-by-Step Guide
 
-```js
-rs.initiate({_id : "mongors1", members: [{ _id : 0, host : "mongoshard11" },{ _id : 1, host : "mongoshard12" },{ _id : 2, host : "mongoshard13" }]})
-```
-
-Still from the mongoshard11 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node configured.
-
-```js
-rs.status()
-```
-
-# Shard 2
-
-From **mongoshard21** mongo shell we need now to initialize the replica set cluster for the second Shard.
-
-```js
-rs.initiate({_id : "mongors2", members: [{ _id : 0, host : "mongoshard21" },{ _id : 1, host : "mongoshard22" },{ _id : 2, host : "mongoshard23" }]})
-```
-
-Still from the mongoshard21 mongo shell, check the result with the following command. Sometimes it will takes some seconds in order to elect the primary node, so please be patient and ensure you have in the same list result the primary node configured.
-
-```js
-rs.status()
-```
-
-# Add Sharded Clusters
-
-From **mongos** mongo shell
-
-```js
-sh.addShard("mongors1/mongoshard11")
-sh.addShard("mongors2/mongoshard21")
-```
-
-You can check now the output again and find all the added Shards with
-
-```js
-sh.status()
-```
+If you are intereseted in a step-by-step guide, open the **./manual** folder in order to follow steps that illustrate you which are the basic procedures in order to configure a cluster of already deployed mondod and mongos nodes.
 
 # Test the architecture
 
