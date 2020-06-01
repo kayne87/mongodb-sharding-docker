@@ -125,10 +125,24 @@ Totals
 ```
 
 
-#### Cleaning tip
+# Cleaning tips
 
 With the following command, from the docker-compose file folder, you can stop all the running containers and remove all of them.
 
 ```console
 docker-compose rm -sv
+```
+
+If you want to update the .yml file and start from scratch (by resetting the mongodb /data/db) the deployment and configuration, you can remove the named volumes attached during the docker-compose initialization. You can list all the volumes with ```docker volume ls``` and then execute 
+
+```console
+docker volume rm <volume_1> <volume_2> <volume_3> <volume_4> ...
+```
+
+# Database tip
+
+If you want to see all the [logs](https://docs.docker.com/engine/reference/commandline/logs/) from a particular node server (router, config node, shard node) you can execute 
+
+```console
+docker logs mongos1
 ```

@@ -5,8 +5,11 @@ In this repository you can find a Compose configuration in order to deploy a Sha
 The deployed cluster will have:
 
 - 2 **Shard** clusters in replica set (3 nodes for each cluster)
+  - *mongoshard11*, *mongoshard12*, *mongoshard13*, *mongoshard21*, *mongoshard22*, *mongoshard23* 
 - 1 **Config** cluster in replica set (3 nodes)
+  - *mongocfg1*, *mongocfg2*, *mongocfg3*
 - 1 **Router** mongos instance
+  - *mongos1*
 
 This repository is only for experimental usage. Use it for development or testing purpose. If you are looking for a production architecture please consider the security, distribution and high-availability aspects in a deeper way.
 
@@ -22,12 +25,12 @@ Using the fastest configuration from this repository you can deploy your Sharded
 docker-compose up -d
 ```
 
-After the execution of this command, all the nodes will be runned and built with configuration scripts that will be executed automatically. The entire process will take some seconds in order to initialize 3 Replica set, elect primary nodes and add the Shards to the router.
+After the execution of this command, all the nodes will be started and built with configuration scripts that will be executed automatically. The entire **one-off** process will take some time in order to build the images, initialize 3 Replica sets, elect primary nodes and add the Shards to the router. From the second time, you will only have to wait for the containers to start.
 
 From **mongos** mongo shell
 
 ```console
-mongo --port 27027 # or "docker exec -it mongos1 /bin/bash" and then "mongo" directly from the container
+mongo --port 27027 # or "docker exec -it mongos1 /bin/bash" and then "mongo" directly from the container terminal
 > sh.status()
 ```
 
@@ -94,10 +97,24 @@ Totals
 ```
 
 
-#### Cleaning tip
+# Cleaning tips
 
 With the following command, from the docker-compose file folder, you can stop all the running containers and remove all of them.
 
 ```console
 docker-compose rm -sv
+```
+
+If you want to update the .yml file and start from scratch (by resetting the mongodb /data/db) the deployment and configuration, you can remove the named volumes attached during the docker-compose initialization. You can list all the volumes with ```docker volume ls``` and then execute 
+
+```console
+docker volume rm <volume_1> <volume_2> <volume_3> <volume_4> ...
+```
+
+# Database tip
+
+If you want to see all the [logs](https://docs.docker.com/engine/reference/commandline/logs/) from a particular node server (router, config node, shard node) you can execute 
+
+```console
+docker logs mongos1
 ```
