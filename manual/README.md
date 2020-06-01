@@ -96,7 +96,7 @@ sh.shardCollection("shardedDB.shardedCollection", {"_id": "hashed"})
 Insert some records into the collection
 
 ```js
-for(var i = 0; i <= 1500; i++) db.shardedCollection.insert({x: i})
+for(var i = 0; i < 1500; i++) db.shardedCollection.insert({x: i})
 ```
 
 And finally

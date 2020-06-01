@@ -68,7 +68,7 @@ sh.shardCollection("shardedDB.shardedCollection", {"_id": "hashed"})
 Insert some records into the collection
 
 ```js
-for(var i = 0; i <= 1500; i++) db.shardedCollection.insert({x: i})
+for(var i = 0; i < 1500; i++) db.shardedCollection.insert({x: i})
 ```
 
 And finally
@@ -105,7 +105,7 @@ With the following command, from the docker-compose file folder, you can stop al
 docker-compose rm -sv
 ```
 
-If you want to update the .yml file and start from scratch (by resetting the mongodb /data/db) the deployment and configuration, you can remove the named volumes attached during the docker-compose initialization. You can list all the volumes with ```docker volume ls``` and then execute 
+If you want to update the .yml file and start from scratch the deployment and configuration (by resetting all the mongodb /data/db), you can remove the named volumes attached during the docker-compose initialization. You can list all the volumes with ```docker volume ls``` and then execute 
 
 ```console
 docker volume rm <volume_1> <volume_2> <volume_3> <volume_4> ...
