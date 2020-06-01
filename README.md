@@ -8,7 +8,7 @@ The deployed cluster will have:
 - 1 **Config** cluster in replica set (3 nodes)
 - 1 **Router** mongos instance
 
-Even if this architecture seems to a production env, given the replica sets level, use it for development or testing purpose. If you are looking for a production architecture please consider the security, distribution and high-availability aspects. This repository is only for experimental usage.
+This repository is only for experimental usage. Use it for development or testing purpose. If you are looking for a production architecture please consider the security, distribution and high-availability aspects in a deeper way.
 
 For more advanced topics: **[Membership Authentication](https://docs.mongodb.com/manual/core/security-internal-authentication/), [RBAC Auth](https://docs.mongodb.com/manual/core/authorization/), [Mongo Sharding with Docker Swarm](https://stefanprodan.com/2018/bootstrap-mongo-clusters-docker-swarm/)**
 
@@ -16,7 +16,7 @@ After starting docker-compose, access to the containers as I wrote in this guide
 
 # Fastest configuration
 
-Using the fastest configuration of this repository you can deploy your Sharded Cluster with only one command from the root directory.
+Using the fastest configuration from this repository you can deploy your Sharded Cluster with only one command from the root folder.
 
 ```console
 docker-compose up -d
@@ -27,7 +27,7 @@ After the execution of this command, all the nodes will be runned and built with
 From **mongos** mongo shell
 
 ```console
-mongo --port 27027 # or "docker exec -it mongos1 /bin/bash" 
+mongo --port 27027 # or "docker exec -it mongos1 /bin/bash" and then "mongo" directly from the container
 > sh.status()
 ```
 
@@ -51,7 +51,7 @@ db.databases.find()
 If you see something like that, we are at a good point.
 
 ```js
-{ "_id" : "shardedDB", "primary" : "mongors2", "partitioned" : true, "version" : { "uuid" : UUID("14477fea-536a-47a7-9e9d-0201ea2b85f1"), "lastMod" : 1 } }
+{ "_id" : "shardedDB", "primary" : "shard2", "partitioned" : true, "version" : { "uuid" : UUID("14477fea-536a-47a7-9e9d-0201ea2b85f1"), "lastMod" : 1 } }
 ```
 
 Now we can proceed to create the **sharded collection**. If your application will mostly perform write operations and it needs to execute simple read procedures, the Hashing Strategy is a good option, in this case you can adopt this by using the unique identifier in order to equal distribute the amount of data. In Ranged Strategy you can encounter unbalanced distributions given the optimization for read procedures ("similar data" are grouped). Refer to [Shard Keys](https://docs.mongodb.com/manual/core/sharding-shard-key/) guide for more informations.
@@ -65,7 +65,7 @@ sh.shardCollection("shardedDB.shardedCollection", {"_id": "hashed"})
 Insert some records into the collection
 
 ```js
-for(var i = 1; i <= 1500; i++) db.shardedCollection.insert({x: i})
+for(var i = 0; i <= 1500; i++) db.shardedCollection.insert({x: i})
 ```
 
 And finally

@@ -1,6 +1,6 @@
 # MongoDB Sharding with Docker
 
-Deploy your sharded cluster with
+Deploy your sharded cluster with the following command from the /manual repository folder.
 
 ```console
 docker-compose up -d
@@ -8,12 +8,12 @@ docker-compose up -d
 
 You can check with **docker-compose ps** if all the cluster nodes are up.
 
-Now proceed with the following steps.
+Now, proceed with the following steps.
 
 # Config Servers in replica set
 
 
-From **mongocfg1** (or from every node mongocfgx) mongo shell
+From **mongocfg1** mongo shell
 
 ```js
 rs.initiate({_id: "cfg", configsvr: true, members: [{_id: 0, host: "mongocfg1"},{_id: 1, host: "mongocfg2"}, {_id: 2, host : "mongocfg3"}]})
@@ -96,7 +96,7 @@ sh.shardCollection("shardedDB.shardedCollection", {"_id": "hashed"})
 Insert some records into the collection
 
 ```js
-for(var i = 1; i <= 1500; i++) db.shardedCollection.insert({x: i})
+for(var i = 0; i <= 1500; i++) db.shardedCollection.insert({x: i})
 ```
 
 And finally
