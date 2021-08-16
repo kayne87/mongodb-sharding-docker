@@ -61,7 +61,7 @@ Now we can proceed to create the **sharded collection**. If your application wil
 
 ```js
 use shardedDB
-db.shardedCollection.ensureIndex({_id: "hashed"})
+db.shardedCollection.createIndex({_id: "hashed"})
 sh.shardCollection("shardedDB.shardedCollection", {"_id": "hashed"})
 ```
 
