@@ -118,3 +118,8 @@ If you want to see all the [logs](https://docs.docker.com/engine/reference/comma
 ```console
 docker logs mongos1
 ```
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
